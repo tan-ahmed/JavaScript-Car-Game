@@ -1,4 +1,4 @@
-#container{
+#container {
  position: relative;
  height: 600px;
  width: 800px;
@@ -7,7 +7,7 @@
  overflow: hidden;
 }
 
-.dashboard{
+.dashboard {
  background-color: black;
  color: white;
  font-size: 1.5rem;
@@ -15,7 +15,7 @@
  padding: 15px;
 }
 
-.btnStart{
+.btnStart {
  position: absolute;
  top: 480px;
  left: 20%;
@@ -30,7 +30,7 @@
  padding: 5px;
 }
 
-.road{
+.road {
  position: absolute;
  height: 50px;
  width: 250px;
@@ -42,7 +42,7 @@
  border-radius: 2px;
 }
 
-.road:before{
+.road:before {
  content: "|";
  vertical-align: top;
  color: white;
@@ -53,7 +53,7 @@
  position: absolute;
 }
 
-.playerCar{
+.playerCar {
  position: absolute;
  height: 80px;
  width: 40px;
@@ -63,4 +63,17 @@
  background-image: url('car1.png');
  background-size: cover;
  z-index: 100;
+}
+
+.baddy {
+ position: absolute;
+ height: 80px;
+ width: 40px;
+ top: 0px;
+ left: 0px;
+ border-radius: 5px;
+ background-image: url('car2.png');
+ background-size: cover;
+ z-index: 99;
+ text-align: center;
 }

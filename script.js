@@ -37,6 +37,35 @@ function startGame() {
     roadwidth: 250
   }
   startBoard();
+  setupBadGuys(10);
+}
+
+function setupBadGuys(num){
+  for(let x = 0; x<num; x++){
+    let temp = 'badGuy'+(x+1);
+    let div = document.createElement('div');
+    div.innerHTML = (x+1);
+    div.setAttribute('class', 'baddy');
+    div.setAttribute('id', temp);
+    div.style.backgroundColor = randomColor();
+    makeBad(div);
+    container.appendChild(div);
+  }
+}
+
+function randomColor(){
+  function c(){
+    let hex = Math.floor(Math.random()*256).toString(16);
+    return('0'+String(hex)).substr(-2);
+  }
+  return '#'+c()+c()+c();
+}
+
+function makeBad(e){
+  let tempRoad = document.querySelector('.road');
+  e.style.left = tempRoad.offsetLeft + Math.ceil(Math.random()*tempRoad.offsetWidth)-30+'px';
+  e.style.top = Math.ceil(Math.random() * -400) + 'px';
+  e.speed = Math.ceil(Math.random() * 17) +2;
 }
 
 function startBoard() {
