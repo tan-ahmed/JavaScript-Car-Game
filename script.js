@@ -18,7 +18,7 @@ let keys = {
 }
 
 function startGame() {
-  console.log(gamePlay);
+  // console.log(gamePlay);
   btnStart.style.display = 'none';
   var div = document.createElement('div');
   div.setAttribute('class', 'playerCar');
@@ -51,13 +51,13 @@ function startBoard() {
 
 function pressKeyOn(event) {
   event.preventDefault();
-  console.log(keys);
+  // console.log(keys);
   keys[event.key] = true;
 }
 
 function pressKeyOff(event) {
   event.preventDefault();
-  console.log(keys);
+  // console.log(keys);
   keys[event.key] = false;
 }
 
@@ -70,10 +70,10 @@ function updateDash() {
 
 function moveRoad() {
   let tempRoad = document.querySelectorAll('.road');
-  console.log(tempRoad);
+  // console.log(tempRoad);
   let previousRoad = tempRoad[0].offsetLeft;
-  let previousWidth = tempRoad[0].width;
-  const pSpeed = player.speed;
+  let previousWidth = tempRoad[0].offsetWidth;
+  const pSpeed = Math.floor(player.speed);
   for (let x = 0; x < tempRoad.length; x++) {
     let num = tempRoad[x].offsetTop + pSpeed;
     if (num > 600) {
@@ -91,6 +91,8 @@ function moveRoad() {
     }
     tempRoad[x].style.top = num + 'px';
   }
+  //returns an object with the values from the top
+  return {'width': previousWidth, 'left': previousRoad};
 
 }
 
@@ -98,7 +100,9 @@ function playGame() {
   if (gamePlay) {
     updateDash();
     ///Movement
-    moveRoad();
+    let roadPara = moveRoad();
+    // console.log(roadPara);
+    
 
     if (keys.ArrowUp) {
       if (player.ele.y > 400) player.ele.y -= 1;
@@ -114,6 +118,15 @@ function playGame() {
     if (keys.ArrowLeft) {
       player.ele.x -= (player.speed / 4);
     }
+    //check if on road
+    if ((player.ele.x + 40) < roadPara.left || (player.ele.x > (roadPara.left + roadPara.width))) {
+      
+      if (player.ele.y < 500) { player.ele.y += +1; }
+
+      player.speed = player.speed > 0 ? (player.speed - 0.2): 1;
+      console.log('off road');
+    }
+
     ///move car
     player.ele.style.top = player.ele.y + 'px';
     player.ele.style.left = player.ele.x + 'px';
