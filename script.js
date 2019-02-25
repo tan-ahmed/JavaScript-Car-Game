@@ -47,7 +47,6 @@ function setupBadGuys(num){
     div.innerHTML = (x+1);
     div.setAttribute('class', 'baddy');
     div.setAttribute('id', temp);
-    div.style.backgroundColor = randomColor();
     makeBad(div);
     container.appendChild(div);
   }
@@ -66,6 +65,7 @@ function makeBad(e){
   e.style.left = tempRoad.offsetLeft + Math.ceil(Math.random()*tempRoad.offsetWidth)-30+'px';
   e.style.top = Math.ceil(Math.random() * -400) + 'px';
   e.speed = Math.ceil(Math.random() * 17) +2;
+  e.style.backgroundColor = randomColor();
 }
 
 function startBoard() {
@@ -125,11 +125,27 @@ function moveRoad() {
 
 }
 
+function moveBadGuys(){
+  let tempBaddy = document.querySelectorAll('baddy');
+  for (let i = 0; i<tempBaddy.length; i++){
+    let y = tempBaddy[i].offsetTop + player.speed - tempBaddy[i].speed;
+    if(y>2000 || y < -2000){
+      //reset car
+      makeBad(tempBaddy[i]);
+    } else {
+      tempBaddy[i].style.top = y + 'px';
+    }
+
+
+  }
+}
+
 function playGame() {
   if (gamePlay) {
     updateDash();
     ///Movement
     let roadPara = moveRoad();
+    moveBadGuys();
     // console.log(roadPara);
     
 
