@@ -129,14 +129,16 @@ function moveRoad() {
   return { width: previousWidth, left: previousRoad };
 }
 
-function isCollide(a, b){
+function isCollide(a, b) {
   let aRect = a.getBoundingClientRect();
   let bRect = b.getBoundingClientRect();
   // console.log(aRect);
   return !(
-    (aRect.bottom < bRect.top)  || (aRect.top > bRect.bottom) || (aRect.right < bRect.left) || (aRect.left > bRect.right)
-  )
-
+    aRect.bottom < bRect.top ||
+    aRect.top > bRect.bottom ||
+    aRect.right < bRect.left ||
+    aRect.left > bRect.right
+  );
 }
 
 function moveBadGuys() {
@@ -149,14 +151,14 @@ function moveBadGuys() {
     } else {
       tempBaddy[i].style.top = y + "px";
       let hitCar = isCollide(tempBaddy[i], player.ele);
-      console.log(hitCar);
-      if (hitCar){
+      // console.log(hitCar);
+      if (hitCar) {
         player.speed = 0;
         player.lives--;
-        if(player.lives < 1){
-
+        if (player.lives < 1) {
+          player.gameEndCounter = 1;
         }
-        player.gameEndCounter = 1;
+        
         makeBad(tempBaddy[i]);
       }
     }
@@ -164,6 +166,15 @@ function moveBadGuys() {
 }
 
 function playGame() {
+  if (player.gameEndCounter > 0){
+    player.gameEndCounter--;
+    player.y = (player.y > 60) ? player.y-30 : 60;
+    if (player.gameEndCounter == 0){
+      gamePlay = false;
+      btnStart.style.display = 'block';
+    }
+  }
+
   if (gamePlay) {
     updateDash();
     ///Movement
