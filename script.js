@@ -34,7 +34,8 @@ function startGame() {
     gameScore: 0,
     carstoPass: 10,
     score: 0,
-    roadwidth: 250
+    roadwidth: 250,
+    gameEndCounter: 0
   };
   startBoard();
   setupBadGuys(10);
@@ -149,6 +150,15 @@ function moveBadGuys() {
       tempBaddy[i].style.top = y + "px";
       let hitCar = isCollide(tempBaddy[i], player.ele);
       console.log(hitCar);
+      if (hitCar){
+        player.speed = 0;
+        player.lives--;
+        if(player.lives < 1){
+
+        }
+        player.gameEndCounter = 1;
+        makeBad(tempBaddy[i]);
+      }
     }
   }
 }
