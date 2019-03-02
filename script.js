@@ -134,16 +134,24 @@ function isCollide(a, b) {
   let bRect = b.getBoundingClientRect();
   // console.log(aRect);
   return !(
-    aRect.bottom < bRect.top ||
-    aRect.top > bRect.bottom ||
-    aRect.right < bRect.left ||
-    aRect.left > bRect.right
-  );
+    (aRect.bottom < bRect.top) || (aRect.top > bRect.bottom) || (aRect.right < bRect.left) || (aRect.left > bRect.right))
 }
 
 function moveBadGuys() {
   let tempBaddy = document.querySelectorAll(".baddy");
   for (let i = 0; i < tempBaddy.length; i++) {
+    // collision detection
+    for (let ii = 0; ii < tempBaddy.length; ii++) {
+      if (i != ii && isCollide(tempBaddy[i], tempBaddy[ii])) {
+        tempBaddy[ii].style.top = (tempBaddy[ii].offsetTop + 50) + "px";
+        tempBaddy[i].style.top = (tempBaddy[i].offsetTop - 50) + "px";
+        tempBaddy[ii].style.left = (tempBaddy[ii].offsetLeft - 50)  + "px";
+        tempBaddy[i].style.left = (tempBaddy[i].offsetLeft + 50) + "px";
+      }
+    }
+
+ 
+
     let y = tempBaddy[i].offsetTop + player.speed - tempBaddy[i].speed;
     if (y > 2000 || y < -2000) {
       //reset car
@@ -158,7 +166,7 @@ function moveBadGuys() {
         if (player.lives < 1) {
           player.gameEndCounter = 1;
         }
-        
+
         makeBad(tempBaddy[i]);
       }
     }
@@ -166,12 +174,12 @@ function moveBadGuys() {
 }
 
 function playGame() {
-  if (player.gameEndCounter > 0){
+  if (player.gameEndCounter > 0) {
     player.gameEndCounter--;
-    player.y = (player.y > 60) ? player.y-30 : 60;
-    if (player.gameEndCounter == 0){
+    player.y = player.y > 60 ? player.y - 30 : 60;
+    if (player.gameEndCounter == 0) {
       gamePlay = false;
-      btnStart.style.display = 'block';
+      btnStart.style.display = "block";
     }
   }
 
