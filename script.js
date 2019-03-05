@@ -19,6 +19,7 @@ let keys = {
 
 function startGame() {
   // console.log(gamePlay);
+  container.innerHTML = '';
   btnStart.style.display = "none";
   var div = document.createElement("div");
   div.setAttribute("class", "playerCar");
@@ -29,10 +30,10 @@ function startGame() {
   animationGame = requestAnimationFrame(playGame);
   player = {
     ele: div,
-    speed: 9,
+    speed: 0,
     lives: 3,
     gameScore: 0,
-    carstoPass: 2,
+    carstoPass: 1,
     score: 0,
     roadwidth: 250,
     gameEndCounter: 0
@@ -189,17 +190,11 @@ function gameOverPlay(){
   div.style.fontSize = '3rem';
   container.appendChild(div);
   player.gameEndCounter = 12;
+  player.speed = 0;
 }
 
 function playGame() {
-  if (player.gameEndCounter > 0) {
-    player.gameEndCounter--;
-    player.y = player.y > 60 ? player.y - 30 : 60;
-    if (player.gameEndCounter == 0) {
-      gamePlay = false;
-      btnStart.style.display = "block";
-    }
-  }
+
 
   if (gamePlay) {
     updateDash();
@@ -242,4 +237,13 @@ function playGame() {
     player.ele.style.left = player.ele.x + "px";
   }
   animationGame = requestAnimationFrame(playGame);
+  if (player.gameEndCounter > 0) {
+    player.gameEndCounter--;
+    player.y = player.y > 60 ? player.y - 30 : 60;
+    if (player.gameEndCounter == 0) {
+      gamePlay = false;
+      cancelAnimationFrame(animationGame);
+      btnStart.style.display = "block";
+    }
+  }
 }
