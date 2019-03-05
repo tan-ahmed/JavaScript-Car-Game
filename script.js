@@ -32,7 +32,7 @@ function startGame() {
     speed: 9,
     lives: 3,
     gameScore: 0,
-    carstoPass: 10,
+    carstoPass: 2,
     score: 0,
     roadwidth: 250,
     gameEndCounter: 0
@@ -155,6 +155,12 @@ function moveBadGuys() {
     let y = tempBaddy[i].offsetTop + player.speed - tempBaddy[i].speed;
     if (y > 2000 || y < -2000) {
       //reset car
+      if(y > 2000){
+        player.score++;
+        if(player.score > player.carstoPass){
+          gameOverPlay();
+        }
+      }
       makeBad(tempBaddy[i]);
     } else {
       tempBaddy[i].style.top = y + "px";
@@ -171,6 +177,18 @@ function moveBadGuys() {
       }
     }
   }
+}
+
+function gameOverPlay(){
+  let div = document.createElement('div');
+  div.setAttribute('class', 'road');
+  div.style.top = '0px';
+  div.style.width = '250px';
+  div.style.backgroundColor = 'red';
+  div.innerHTML = 'FINISH';
+  div.style.fontSize = '3rem';
+  container.appendChild(div);
+  player.gameEndCounter = 12;
 }
 
 function playGame() {
