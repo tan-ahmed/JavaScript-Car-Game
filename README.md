@@ -9,5 +9,6 @@
   - Game pad controls for mobile devices
   - Enhance Graphics
   - Enhance GUI
-  - Allow user to select car
+  - Car selection at the beginnng of the game
+  - - different cars have different top speed, handling, acceleration
   - Refactor code to use ES6 Classes, imports, contructors, template literals etc
